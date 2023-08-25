@@ -43,7 +43,7 @@ public class CommunityService {
 
     public Community getPost(Long id) {
         return communityRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 없습니다.")
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.")
         );
     }
 
