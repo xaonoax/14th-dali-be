@@ -35,4 +35,13 @@ public class CommunityController {
         return communityService.getPosts(pageable, ampm, time, gender);
     }
 
+    @PutMapping("/{id}")
+    public Community updatePost(@PathVariable Long id, @RequestBody CommunityDto communityDto) {
+        return communityService.updatePost(id, communityDto);
+    }
+
+    @DeleteMapping("{id}")
+    public Community deletePost(@PathVariable Long id) {
+        return communityService.deletePost(id);
+    }
 }

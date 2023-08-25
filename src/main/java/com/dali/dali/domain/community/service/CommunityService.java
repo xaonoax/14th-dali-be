@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -54,5 +55,34 @@ public class CommunityService {
             return communityRepository.findByAmpm(ampm, pageable);
         }
         return communityRepository.findByGenderAndTimeAndAmpm(gender, time, ampm, pageable);
+    }
+
+    public Community updatePost(Long id, CommunityDto communityDto) {
+        Optional<Community> existPost = communityRepository.findById(id);
+        if (existPost.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정할 게시글이 존재하지 않습니다.");
+        }
+
+        Community community = Community.builder()
+                .id(existPost.get().getId())
+                .title(communityDto.getTitle())
+                .content(communityDto.getContent())
+                .gender(communityDto.getGender())
+                .ampm(communityDto.getAmpm())
+                .time(communityDto.getTime())
+                .userCount(communityDto.getUserCount())
+                .regDate(existPost.get().getRegDate())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        return communityRepository.save(community);
+    }
+
+    public Community deletePost(Long id) {
+        Community community = communityRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.")
+        );
+        communityRepository.deleteById(id);
+        return community;
     }
 }
