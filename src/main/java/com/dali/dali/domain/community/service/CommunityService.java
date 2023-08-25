@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -18,9 +19,11 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class CommunityService {
     private final CommunityRepository communityRepository;
 
+    @Transactional
     public Community createPost(CommunityDto communityDto) {
 
         // 로그인 검증 추후 추가
@@ -57,6 +60,7 @@ public class CommunityService {
         return communityRepository.findByGenderAndTimeAndAmpm(gender, time, ampm, pageable);
     }
 
+    @Transactional
     public Community updatePost(Long id, CommunityDto communityDto) {
         Optional<Community> existPost = communityRepository.findById(id);
         if (existPost.isEmpty()) {
@@ -78,6 +82,7 @@ public class CommunityService {
         return communityRepository.save(community);
     }
 
+    @Transactional
     public Community deletePost(Long id) {
         Community community = communityRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.")
