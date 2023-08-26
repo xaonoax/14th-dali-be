@@ -6,6 +6,9 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.repository.CommunityRepository;
+import com.dali.dali.domain.park.Park;
+import com.dali.dali.domain.park.ParkRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +25,13 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class CommunityService {
     private final CommunityRepository communityRepository;
+    private final ParkRepository parkRepository;
 
     @Transactional
     public Community createPost(CommunityDto communityDto) {
 
-        // 로그인 검증 추후 추가
+        Park park = parkRepository.findById(communityDto.getPark_id())
+                .orElseThrow(() -> new EntityNotFoundException(communityDto.getPark_id() + ": 공원을 찾을 수 없습니다."));
 
         Community community = Community.builder()
                 .title(communityDto.getTitle())
@@ -36,6 +41,7 @@ public class CommunityService {
                 .time(communityDto.getTime())
                 .userCount(communityDto.getUserCount())
                 .regDate(LocalDateTime.now())
+                .park(park)
                 .build();
 
         return communityRepository.save(community);
@@ -67,6 +73,9 @@ public class CommunityService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정할 게시글이 존재하지 않습니다.");
         }
 
+        Park park = parkRepository.findById(communityDto.getPark_id())
+                .orElseThrow(() -> new EntityNotFoundException(communityDto.getPark_id() + ": 공원을 찾을 수 없습니다."));
+
         Community community = Community.builder()
                 .id(existPost.get().getId())
                 .title(communityDto.getTitle())
@@ -77,6 +86,7 @@ public class CommunityService {
                 .userCount(communityDto.getUserCount())
                 .regDate(existPost.get().getRegDate())
                 .updateDate(LocalDateTime.now())
+                .park(park)
                 .build();
 
         return communityRepository.save(community);
