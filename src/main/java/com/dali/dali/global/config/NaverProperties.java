@@ -1,4 +1,4 @@
-package com.dali.dali.domain.users.config;
+package com.dali.dali.global.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

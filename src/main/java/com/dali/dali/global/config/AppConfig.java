@@ -1,4 +1,4 @@
-package com.dali.dali.domain.users.config;
+package com.dali.dali.global.config;
 
 import org.json.simple.parser.JSONParser;
 import org.springframework.context.annotation.Bean;
