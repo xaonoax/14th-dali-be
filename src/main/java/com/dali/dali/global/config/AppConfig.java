@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
