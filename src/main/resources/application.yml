@@ -18,9 +18,9 @@ spring:
       api:
         key: ${KAKAO_REST_API_KEY}
 
-logging:
-  level:
-    org.hibernate.SQL: debug
+  logging:
+    level:
+      org.hibernate.SQL: debug
 
   security:
     oauth2:
