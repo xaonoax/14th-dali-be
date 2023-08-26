@@ -39,7 +39,7 @@ public class OAuthService {
     public UserDTO getUserProfile(String accessToken) {
         String profileJson = requestUserProfile(requestCreateProfile(accessToken)).getBody();
         UserDTO userDTO = extractUserProfile(profileJson);
-        saveUserFromNaverProfile(userDTO);  // DB에 사용자 정보 저장
+        saveUserFromNaverProfile(userDTO);
         return userDTO;
     }
 
