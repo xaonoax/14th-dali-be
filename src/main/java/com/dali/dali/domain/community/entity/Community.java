@@ -1,9 +1,10 @@
 package com.dali.dali.domain.community.entity;
 
+import com.dali.dali.domain.park.Park;
+import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
 
 import java.time.LocalDateTime;
 
@@ -20,8 +21,13 @@ public class Community {
     @Column(name = "community_id")
     private Long id;
 
-    private Long userId;
-    private Long parkId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "park_id")
+    private Park park;
 
     @Column(nullable = false)
     private String title;
