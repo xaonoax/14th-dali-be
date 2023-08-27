@@ -27,6 +27,10 @@ public class RunnerService {
         Community community = communityRepository.findById(runnerDto.getCommunity_id())
                 .orElseThrow(() -> new NotFoundException(runnerDto.getCommunity_id() + " : 글이 존재하지 않습니다."));
 
+        if (community.getCurrentCount() >= community.getUserCount()) {
+            throw new IllegalStateException("참여 마감되었습니다.");
+        }
+
         Runner runner = Runner.builder()
                 .user_id(runnerDto.getUser_id())
                 .community(community)
