@@ -53,8 +53,8 @@ public class CommunityService {
         );
     }
 
-    public Page<Community> getPosts(Pageable pageable, AMPM ampm, Time time, Gender gender) {
-        if (ampm == null && time == null && gender == null) {
+    public Page<Community> getPosts(Pageable pageable, AMPM ampm, Time time, Gender gender, String park_name) {
+        if (ampm == null && time == null && gender == null && park_name == null) {
             return communityRepository.findAll(pageable);
         } else if (gender != null) {
             return communityRepository.findByGender(gender, pageable);
@@ -62,8 +62,10 @@ public class CommunityService {
             return communityRepository.findByTime(time, pageable);
         } else if (ampm != null) {
             return communityRepository.findByAmpm(ampm, pageable);
+        } else if (park_name != null) {
+            return communityRepository.findByParkNameContaining(park_name, pageable);
         }
-        return communityRepository.findByGenderAndTimeAndAmpm(gender, time, ampm, pageable);
+        return communityRepository.findByGenderAndTimeAndAmpmAndParkName(gender, time, ampm, park_name, pageable);
     }
 
     @Transactional
