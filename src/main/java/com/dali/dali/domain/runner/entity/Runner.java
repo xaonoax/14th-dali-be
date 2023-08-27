@@ -1,6 +1,7 @@
 package com.dali.dali.domain.runner.entity;
 
 import com.dali.dali.domain.community.entity.Community;
+import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +22,9 @@ public class Runner {
     @JoinColumn(name = "community_id")
     private Community community;
 
-    // 유저 추후 추가
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private int participation;
 

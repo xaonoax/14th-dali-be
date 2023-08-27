@@ -8,6 +8,8 @@ import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.repository.CommunityRepository;
 import com.dali.dali.domain.park.Park;
 import com.dali.dali.domain.park.ParkRepository;
+import com.dali.dali.domain.users.entity.User;
+import com.dali.dali.domain.users.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,12 +28,17 @@ import java.util.Optional;
 public class CommunityService {
     private final CommunityRepository communityRepository;
     private final ParkRepository parkRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Community createPost(CommunityDto communityDto) {
 
         Park park = parkRepository.findById(communityDto.getPark_id())
                 .orElseThrow(() -> new EntityNotFoundException(communityDto.getPark_id() + ": 공원을 찾을 수 없습니다."));
+
+        // 로그인 구현 후 현재 로그인한 사용자로 검증
+        User user = userRepository.findById(communityDto.getUser_id())
+                .orElseThrow(() -> new EntityNotFoundException(communityDto.getUser_id() + ": 유저를 찾을 수 없습니다."));
 
         Community community = Community.builder()
                 .title(communityDto.getTitle())
@@ -42,6 +49,7 @@ public class CommunityService {
                 .userCount(communityDto.getUserCount())
                 .regDate(LocalDateTime.now())
                 .park(park)
+                .user(user)
                 .build();
 
         return communityRepository.save(community);
