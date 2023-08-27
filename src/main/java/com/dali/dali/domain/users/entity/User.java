@@ -1,23 +1,20 @@
 package com.dali.dali.domain.users.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
+@AllArgsConstructor
 @Entity
 @Getter
-@ToString
-@NoArgsConstructor
+@Builder
+@Component
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
-
-    @Column(name = "naver_id", length = 70)
-    private String naverId;
 
     @Column(length = 10)
     private String name;
@@ -34,15 +31,14 @@ public class User {
     @Column(length = 255)
     private String profile;
 
-    @Builder
-    public User(String naverId, String name,
-                String gender, String email,
-                String nickname, String profile) {
-        this.naverId = naverId;
-        this.name = name;
-        this.gender = gender;
-        this.email = email;
-        this.nickname = nickname;
-        this.profile = profile;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public User() {
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }
