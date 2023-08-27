@@ -29,7 +29,7 @@ spring:
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: http://localhost:8080/users/login
+            redirect-uri: http://localhost:8080/oauth2/callback/naver
             authorization-grant-type: authorization_code
             scope: name, email, nickname, profile, gender
             client-name: Naver
@@ -45,4 +45,4 @@ jwt:
 
 app:
   oauth2:
-    authorizedRedirectUri: https://localhost:8080/oauth2/redirect
+    authorizedRedirectUri: http://localhost:8080/oauth2/redirect
