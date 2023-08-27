@@ -1,9 +1,15 @@
 package com.dali.dali.domain.users.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class UserDTO {
+import java.io.Serializable;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class UserDTO implements Serializable {
     private String naverId;
     private String name;
     private String gender;
