@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.*;
 public class RunnerController {
 
     private final RunnerService runnerService;
-    private final CommunityService communityService;
 
     @PostMapping
     public void addRunner(@RequestBody RunnerDto runnerDto) throws Exception {
         runnerService.addRunner(runnerDto);
+    }
+
+    @DeleteMapping
+    public void deleteRunner(@RequestBody RunnerDto runnerDto) throws Exception {
+        runnerService.deleteRunner(runnerDto);
     }
 
     @PostMapping("/{community_id}")

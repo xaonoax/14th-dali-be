@@ -4,6 +4,7 @@ import com.dali.dali.domain.community.entity.AMPM;
 import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
+import com.dali.dali.domain.park.Park;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,7 @@ public interface CommunityRepository extends JpaRepository <Community, Long> {
     Page<Community> findByTime(Time time, Pageable pageable);
     Page<Community> findByAmpm(AMPM ampm, Pageable pageable);
 
-    Page<Community> findByGenderAndTimeAndAmpm(Gender gender, Time time, AMPM ampm, Pageable pageable);
+    Page<Community> findByParkNameContaining(String park_name, Pageable pageable);
+
+    Page<Community> findByGenderAndTimeAndAmpmAndParkName(Gender gender, Time time, AMPM ampm, String park_name, Pageable pageable);
 }
