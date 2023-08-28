@@ -1,4 +1,4 @@
-package com.dali.dali.domain.park;
+package com.dali.dali.domain.park.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

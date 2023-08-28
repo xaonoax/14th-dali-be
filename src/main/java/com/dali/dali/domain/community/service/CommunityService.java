@@ -6,7 +6,7 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.repository.CommunityRepository;
-import com.dali.dali.domain.park.Park;
+import com.dali.dali.domain.park.entity.Park;
 import com.dali.dali.domain.park.ParkRepository;
 import com.dali.dali.domain.users.entity.User;
 import com.dali.dali.domain.users.repository.UserRepository;

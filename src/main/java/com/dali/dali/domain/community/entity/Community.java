@@ -1,6 +1,6 @@
 package com.dali.dali.domain.community.entity;
 
-import com.dali.dali.domain.park.Park;
+import com.dali.dali.domain.park.entity.Park;
 import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
