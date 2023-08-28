@@ -1,10 +1,13 @@
 package com.dali.dali.domain.park.dto;
 
-import com.dali.dali.domain.park.Park;
+import com.dali.dali.domain.park.entity.Park;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkResponseDto {
 
     private Long id;
@@ -27,4 +30,7 @@ public class ParkResponseDto {
         this.longitude = park.getLongitude();
         this.latitude = park.getLatitude();
     }
+
+
+
 }

@@ -22,4 +22,9 @@ public class ParkService {
     }
 
 
+    public List<ParkResponseDto> searchParksBySearchWord(String keyword) {
+        return parkRepository.findByNameOrAddressContaining(keyword, keyword).stream()
+                .map(ParkResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

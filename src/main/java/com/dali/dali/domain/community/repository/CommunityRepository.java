@@ -4,7 +4,6 @@ import com.dali.dali.domain.community.entity.AMPM;
 import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
-import com.dali.dali.domain.park.Park;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
