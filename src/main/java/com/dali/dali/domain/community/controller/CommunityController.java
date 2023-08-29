@@ -36,10 +36,9 @@ public class CommunityController {
                                     @RequestParam(value = "ampm", required = false) AMPM ampm,
                                     @RequestParam(value = "time", required = false) Time time,
                                     @RequestParam(value = "gender", required = false) Gender gender,
-                                    @RequestParam(value = "park", required = false) String park_name,
                                     Principal principal) {
 
-        return communityService.getPosts(pageable, ampm, time, gender, park_name, principal);
+        return communityService.getPosts(pageable, ampm, time, gender, principal);
     }
 
     @PutMapping("/{id}")

@@ -28,6 +28,8 @@ public class QRunner extends EntityPathBase<Runner> {
 
     public final NumberPath<Integer> participation = createNumber("participation", Integer.class);
 
+    public final DatePath<java.time.LocalDate> runDate = createDate("runDate", java.time.LocalDate.class);
+
     public final com.dali.dali.domain.users.entity.QUser user;
 
     public QRunner(String variable) {

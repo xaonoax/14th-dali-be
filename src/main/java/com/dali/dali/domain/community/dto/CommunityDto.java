@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class CommunityDto {
     private Long id;
     private Long user_id;
-    private Long park_id;
     private String title;
     private String content;
     private Gender gender;

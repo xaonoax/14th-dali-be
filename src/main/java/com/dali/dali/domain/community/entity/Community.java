@@ -25,10 +25,6 @@ public class Community {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "park_id")
-    private Park park;
-
     @Column(nullable = false)
     private String title;
 
