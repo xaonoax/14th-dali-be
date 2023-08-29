@@ -43,6 +43,7 @@ public class Community {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Convert(converter = TimeConverter.class)
     private Time time;
 
     @Column(nullable = false)
