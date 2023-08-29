@@ -13,11 +13,6 @@ spring:
         format_sql: true
     show-sql: true
 
-  kakao:
-    rest:
-      api:
-        key: ${KAKAO_REST_API_KEY}
-
   logging:
     level:
       org.hibernate.SQL: debug

@@ -41,7 +41,6 @@ public class Community {
     @Column(nullable = false)
     private AMPM ampm;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Convert(converter = TimeConverter.class)
     private Time time;
