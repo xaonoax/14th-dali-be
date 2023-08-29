@@ -4,6 +4,7 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -26,6 +27,7 @@ public class Runner {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ColumnDefault("0")
     private int participation;
 
 }
