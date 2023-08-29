@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
@@ -40,9 +39,8 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @ColumnDefault("1")
-    @Column
-    private int level;
+    @Builder.Default()
+    private int level = 1;
 
     public User() {
     }
