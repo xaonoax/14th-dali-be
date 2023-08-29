@@ -1,6 +1,5 @@
 package com.dali.dali.domain.community.entity;
 
-import com.dali.dali.domain.park.entity.Park;
 import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,10 +23,6 @@ public class Community {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "park_id")
-    private Park park;
 
     @Column(nullable = false)
     private String title;

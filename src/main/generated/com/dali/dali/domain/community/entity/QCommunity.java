@@ -32,8 +32,6 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final com.dali.dali.domain.park.entity.QPark park;
-
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 
     public final EnumPath<Time> time = createEnum("time", Time.class);
@@ -64,7 +62,6 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public QCommunity(Class<? extends Community> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.park = inits.isInitialized("park") ? new com.dali.dali.domain.park.entity.QPark(forProperty("park")) : null;
         this.user = inits.isInitialized("user") ? new com.dali.dali.domain.users.entity.QUser(forProperty("user")) : null;
     }
 

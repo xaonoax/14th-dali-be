@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -29,5 +31,7 @@ public class Runner {
 
     @ColumnDefault("0")
     private int participation;
+
+    private LocalDate runDate;
 
 }

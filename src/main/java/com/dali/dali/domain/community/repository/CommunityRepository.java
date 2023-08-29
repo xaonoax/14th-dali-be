@@ -14,8 +14,5 @@ public interface CommunityRepository extends JpaRepository <Community, Long> {
     Page<Community> findByGender(Gender gender, Pageable pageable);
     Page<Community> findByTime(Time time, Pageable pageable);
     Page<Community> findByAmpm(AMPM ampm, Pageable pageable);
-
-    Page<Community> findByParkNameContaining(String park_name, Pageable pageable);
-
-    Page<Community> findByGenderAndTimeAndAmpmAndParkName(Gender gender, Time time, AMPM ampm, String park_name, Pageable pageable);
+    Page<Community> findByGenderAndTimeAndAmpm(Gender gender, Time time, AMPM ampm, Pageable pageable);
 }

@@ -6,7 +6,6 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.service.CommunityService;
-import com.dali.dali.domain.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ import java.security.Principal;
 @RequestMapping("/communities")
 public class CommunityController {
     private final CommunityService communityService;
-    private final UserRepository userRepository;
 
     @PostMapping
     public Community createPost(@RequestBody CommunityDto communityDto, Principal principal) {
@@ -36,10 +34,8 @@ public class CommunityController {
                                     @RequestParam(value = "ampm", required = false) AMPM ampm,
                                     @RequestParam(value = "time", required = false) Time time,
                                     @RequestParam(value = "gender", required = false) Gender gender,
-                                    @RequestParam(value = "park", required = false) String park_name,
                                     Principal principal) {
-
-        return communityService.getPosts(pageable, ampm, time, gender, park_name, principal);
+        return communityService.getPosts(pageable, ampm, time, gender, principal);
     }
 
     @PutMapping("/{id}")
