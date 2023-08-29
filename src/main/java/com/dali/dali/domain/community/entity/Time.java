@@ -1,8 +1,5 @@
 package com.dali.dali.domain.community.entity;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 public enum Time {
     T0("12:00 ~ 01:00"),
     T1("01:00 ~ 02:00"),
@@ -17,9 +14,14 @@ public enum Time {
     T10("10:00 ~ 11:00"),
     T11("11:00 ~ 12:00");
 
-    private final String time;
+
+    private final String value;
+
+    Time(String value) {
+        this.value = value;
+    }
 
     public String getTime() {
-        return time;
+        return value;
     }
 }
