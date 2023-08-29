@@ -14,5 +14,5 @@ public interface RunnerRepository extends JpaRepository<Runner, Long> {
     boolean existsByCommunityIdAndParticipation(Long community_id, int participation);
     List<Runner> findByCommunityIdAndParticipation(Long community_id, int participation);
     Optional<Runner> findByUserAndCommunity(User user, Community community);
-    Optional<Runner> findByParticipation(Long runner_id, int participation);
+    Optional<Runner> findByIdAndParticipation(Long runner_id, int participation);
 }
