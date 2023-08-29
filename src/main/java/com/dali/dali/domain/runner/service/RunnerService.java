@@ -7,6 +7,7 @@ import com.dali.dali.domain.runner.entity.Runner;
 import com.dali.dali.domain.runner.repository.RunRepository;
 import com.dali.dali.domain.runner.repository.RunnerRepository;
 import com.dali.dali.domain.users.entity.User;
+import com.dali.dali.domain.users.repository.UserLevelRepository;
 import com.dali.dali.domain.users.repository.UserRepository;
 import com.dali.dali.global.exception.DuplicateResourceException;
 import com.dali.dali.global.exception.NotFoundException;
@@ -25,6 +26,7 @@ public class RunnerService {
     private final RunnerRepository runnerRepository;
     private final CommunityRepository communityRepository;
     private final UserRepository userRepository;
+    private final UserLevelRepository userLevelRepository;
 
     public void addRunner(RunnerDto runnerDto) throws Exception {
 
@@ -67,7 +69,10 @@ public class RunnerService {
         runRepository.deleteRunner(community);
     }
 
-    public void confirmRunner(Long community_id) throws Exception {
+    public void confirmRunner(RunnerDto runnerDto, Long community_id) throws Exception {
+
+        User user = userRepository.findById(runnerDto.getUser_id())
+                .orElseThrow(() -> new NotFoundException(runnerDto.getUser_id() + " : 유저가 존재하지 않습니다."));
 
         if (runnerRepository.existsByCommunityIdAndParticipation(community_id, 1)) {
             throw new ParticipationAlreadyConfirmException(community_id + " : 참가확인이 완료된 러닝메이트입니다.");
@@ -79,5 +84,7 @@ public class RunnerService {
             runner.setParticipation(1);
         }
         runnerRepository.saveAll(runners);
+        // 레벨 업데이트 구현
+        userLevelRepository.updateLevel(user);
     }
 }

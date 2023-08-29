@@ -1,6 +1,5 @@
 package com.dali.dali.domain.users.dto;
 
-import com.dali.dali.domain.level.entity.Level;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +16,5 @@ public class UserDTO implements Serializable {
     private String email;
     private String nickname;
     private String profile;
-    private Level level;
+    private int level;
 }

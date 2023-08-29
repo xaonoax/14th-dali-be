@@ -23,6 +23,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath gender = createString("gender");
 
+    public final NumberPath<Integer> level = createNumber("level", Integer.class);
+
     public final StringPath name = createString("name");
 
     public final StringPath nickname = createString("nickname");

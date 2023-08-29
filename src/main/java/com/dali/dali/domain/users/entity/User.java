@@ -1,10 +1,11 @@
 package com.dali.dali.domain.users.entity;
 
-import com.dali.dali.domain.level.entity.Level;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Builder
 @Component
+@Setter
 public class User {
 
     @Id
@@ -38,9 +40,9 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @ManyToOne
-    @JoinColumn(name = "level_id")
-    private Level level;
+    @ColumnDefault("1")
+    @Column
+    private int level;
 
     public User() {
     }
