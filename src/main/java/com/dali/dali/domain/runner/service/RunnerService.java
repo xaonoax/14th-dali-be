@@ -46,6 +46,11 @@ public class RunnerService {
                     + ", community: " + community.getId());
         }
 
+        // 러닝메이트가 종료된 글에 참여하기를 누르면 에러 반환
+        if (runnerRepository.existsByCommunityIdAndParticipation(runnerDto.getCommunity_id(), 1)) {
+            throw new ParticipationAlreadyConfirmException("이미 달리는 중입니다. 참여할 수 없습니다.");
+        }
+
         Runner runner = Runner.builder()
                 .user(user)
                 .community(community)
@@ -64,6 +69,10 @@ public class RunnerService {
 
         Runner runner = runnerRepository.findByUserAndCommunity(user, community)
                 .orElseThrow(() -> new NotFoundException("참가하기 정보를 찾을 수 없습니다."));
+
+        if (runnerRepository.existsByCommunityIdAndParticipation(runnerDto.getCommunity_id(), 1)) {
+            throw new ParticipationAlreadyConfirmException("참가확인이 완료되어 참가 취소를 할 수 없습니다.");
+        }
 
         runnerRepository.delete(runner);
         runRepository.deleteRunner(community);
