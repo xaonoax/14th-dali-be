@@ -6,6 +6,8 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.service.CommunityService;
+import com.dali.dali.domain.like.dto.CommunityLikeDTO;
+import com.dali.dali.domain.like.service.CommunityLikeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import java.security.Principal;
 @RequestMapping("/communities")
 public class CommunityController {
     private final CommunityService communityService;
+    private final CommunityLikeService communityLikeService;
 
     @PostMapping
     public Community createPost(@RequestBody CommunityDto communityDto, Principal principal) {
@@ -46,5 +49,16 @@ public class CommunityController {
     @DeleteMapping("{id}")
     public Community deletePost(@PathVariable Long id, Principal principal) {
         return communityService.deletePost(id, principal);
+    }
+
+    // 좋아요 기능
+    @PostMapping("/{community_id}")
+    public void incrementLikeUser(@PathVariable Long community_id, @RequestBody CommunityLikeDTO communityLikeDTO) throws Exception {
+        communityLikeService.incrementLikeUser(communityLikeDTO);
+    }
+
+    @DeleteMapping("/{community_id}")
+    public void decrementLikeUser(@PathVariable Long community_id, @RequestBody CommunityLikeDTO communityLikeDTO) throws Exception {
+        communityLikeService.decrementLikeUser(communityLikeDTO);
     }
 }
