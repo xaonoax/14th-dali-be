@@ -6,8 +6,6 @@ import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.service.CommunityService;
-import com.dali.dali.domain.like.dto.CommunityLikeDTO;
-import com.dali.dali.domain.like.service.CommunityLikeService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +18,6 @@ import java.security.Principal;
 @RequestMapping("/communities")
 public class CommunityController {
     private final CommunityService communityService;
-    private final CommunityLikeService communityLikeService;
 
     @PostMapping
     public Community createPost(@RequestBody CommunityDto communityDto, Principal principal) {
