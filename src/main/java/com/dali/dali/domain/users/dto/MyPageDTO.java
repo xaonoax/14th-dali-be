@@ -1,6 +1,7 @@
 package com.dali.dali.domain.users.dto;
 
 import com.dali.dali.domain.community.entity.Community;
+import com.dali.dali.domain.runner.entity.Runner;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.List;
 @Builder
 public class MyPageDTO {
     private List<Community> user_community;
+    private List<Runner> user_runner;
     private Long user_id;
     private String email;
     private String nickname;
