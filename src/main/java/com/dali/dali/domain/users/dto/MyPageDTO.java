@@ -1,20 +1,21 @@
 package com.dali.dali.domain.users.dto;
 
-import lombok.*;
-
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Getter
-@Setter
+@Service
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO implements Serializable {
+public class MyPageDTO {
     private Long user_id;
-    private String name;
-    private String gender;
     private String email;
     private String nickname;
     private String profile;
     private int level;
+
 }
