@@ -1,10 +1,13 @@
 package com.dali.dali.domain.users.dto;
 
+import com.dali.dali.domain.community.entity.Community;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Getter
 @Service
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 @Builder
 public class MyPageDTO {
+    private List<Community> user_community;
     private Long user_id;
     private String email;
     private String nickname;
