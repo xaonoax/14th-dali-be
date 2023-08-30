@@ -2,6 +2,7 @@ package com.dali.dali.domain.users.service;
 
 import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.repository.CommunityRepository;
+import com.dali.dali.domain.runner.entity.Runner;
 import com.dali.dali.domain.runner.repository.RunnerRepository;
 import com.dali.dali.domain.users.dto.MyPageDTO;
 import com.dali.dali.domain.users.entity.User;
@@ -32,9 +33,11 @@ public class UserService {
                 () -> new NotFoundException("유저가 존재하지 않습니다."));
 
         List<Community> user_community = communityRepository.findByUser(user);
+        List<Runner> user_runner = runnerRepository.findByUser(user);
 
         return MyPageDTO.builder()
                 .user_community(user_community)
+                .user_runner(user_runner)
                 .user_id(user.getUserId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
