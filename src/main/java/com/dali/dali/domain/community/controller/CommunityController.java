@@ -50,15 +50,4 @@ public class CommunityController {
     public Community deletePost(@PathVariable Long id, Principal principal) {
         return communityService.deletePost(id, principal);
     }
-
-    // 좋아요 기능
-    @PostMapping("/{community_id}")
-    public void incrementLikeUser(@PathVariable Long community_id, @RequestBody CommunityLikeDTO communityLikeDTO) throws Exception {
-        communityLikeService.incrementLikeUser(communityLikeDTO);
-    }
-
-    @DeleteMapping("/{community_id}")
-    public void decrementLikeUser(@PathVariable Long community_id, @RequestBody CommunityLikeDTO communityLikeDTO) throws Exception {
-        communityLikeService.decrementLikeUser(communityLikeDTO);
-    }
 }
