@@ -21,9 +21,4 @@ public class RunnerController {
     public void deleteRunner(@RequestBody RunnerDto runnerDto) throws Exception {
         runnerService.deleteRunner(runnerDto);
     }
-
-    @PostMapping("/{community_id}")
-    public void confirmRunner(@PathVariable Long community_id, @RequestBody RunnerDto runnerDto) throws Exception {
-        runnerService.confirmRunner(runnerDto, community_id);
-    }
 }
