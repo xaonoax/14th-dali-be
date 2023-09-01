@@ -24,6 +24,8 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final EnumPath<AMPM> ampm = createEnum("ampm", AMPM.class);
 
+    public final com.dali.dali.domain.city.entity.QCity city;
+
     public final StringPath content = createString("content");
 
     public final NumberPath<Integer> currentCount = createNumber("currentCount", Integer.class);
@@ -62,6 +64,7 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public QCommunity(Class<? extends Community> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.city = inits.isInitialized("city") ? new com.dali.dali.domain.city.entity.QCity(forProperty("city")) : null;
         this.user = inits.isInitialized("user") ? new com.dali.dali.domain.users.entity.QUser(forProperty("user")) : null;
     }
 

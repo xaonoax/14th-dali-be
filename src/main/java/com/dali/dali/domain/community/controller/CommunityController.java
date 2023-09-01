@@ -9,7 +9,15 @@ import com.dali.dali.domain.community.service.CommunityService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
@@ -34,8 +42,11 @@ public class CommunityController {
                                     @RequestParam(value = "ampm", required = false) AMPM ampm,
                                     @RequestParam(value = "time", required = false) Time time,
                                     @RequestParam(value = "gender", required = false) Gender gender,
+                                    @RequestParam(value = "sido", required = false) String sido,
+                                    @RequestParam(value = "sigungu", required = false) String sigungu,
+                                    @RequestParam(value = "dong", required = false) String dong,
                                     Principal principal) {
-        return communityService.getPosts(pageable, ampm, time, gender, principal);
+        return communityService.getPosts(pageable, ampm, time, gender, sido, sigungu, dong, principal);
     }
 
     @PutMapping("/{id}")

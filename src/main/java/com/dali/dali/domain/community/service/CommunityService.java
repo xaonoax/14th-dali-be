@@ -1,11 +1,14 @@
 package com.dali.dali.domain.community.service;
 
+import com.dali.dali.domain.city.entity.City;
+import com.dali.dali.domain.city.repository.CityRepository;
 import com.dali.dali.domain.community.dto.CommunityDto;
 import com.dali.dali.domain.community.entity.AMPM;
 import com.dali.dali.domain.community.entity.Community;
 import com.dali.dali.domain.community.entity.Gender;
 import com.dali.dali.domain.community.entity.Time;
 import com.dali.dali.domain.community.repository.CommunityRepository;
+import com.dali.dali.domain.community.repository.CommunitySpecifications;
 import com.dali.dali.domain.users.entity.User;
 import com.dali.dali.domain.users.repository.UserRepository;
 import com.dali.dali.global.exception.UnauthorizedException;
@@ -13,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +32,7 @@ import java.util.Optional;
 public class CommunityService {
     private final CommunityRepository communityRepository;
     private final UserRepository userRepository;
+    private final CityRepository cityRepository;
 
     @Transactional
     public Community createPost(CommunityDto communityDto, Principal principal) {
@@ -39,6 +44,9 @@ public class CommunityService {
         User user = userRepository.findById(communityDto.getUser_id())
                 .orElseThrow(() -> new EntityNotFoundException(communityDto.getUser_id() + ": 유저를 찾을 수 없습니다."));
 
+        City city = cityRepository.findById(communityDto.getCity_code())
+                .orElseThrow(() -> new EntityNotFoundException("지역이 존재하지 않습니다."));
+
         Community community = Community.builder()
                 .title(communityDto.getTitle())
                 .content(communityDto.getContent())
@@ -48,6 +56,7 @@ public class CommunityService {
                 .userCount(communityDto.getUserCount())
                 .regDate(LocalDateTime.now())
                 .user(user)
+                .city(city)
                 .build();
 
         return communityRepository.save(community);
@@ -65,23 +74,44 @@ public class CommunityService {
     }
 
     public Page<Community> getPosts(Pageable pageable, AMPM ampm,
-                                    Time time, Gender gender, Principal principal) {
+                                    Time time, Gender gender,
+                                    String sido, String sigungu, String dong,
+                                    Principal principal) {
 
         if (principal == null) {
             throw new UnauthorizedException("로그인이 필요합니다.");
         }
 
-        if (ampm == null && time == null && gender == null) {
-            return communityRepository.findAll(pageable);
-        } else if (gender != null) {
-            return communityRepository.findByGender(gender, pageable);
-        } else if (time != null) {
-            return communityRepository.findByTime(time, pageable);
-        } else if (ampm != null) {
-            return communityRepository.findByAmpm(ampm, pageable);
+        Specification<Community> spec = Specification.where(null);
+
+        if (gender != null) {
+            spec = spec.and(CommunitySpecifications.hasGender(gender));
         }
 
-        return communityRepository.findByGenderAndTimeAndAmpm(gender, time, ampm, pageable);
+        if (ampm != null) {
+            spec = spec.and(CommunitySpecifications.hasAmpm(ampm));
+        }
+
+        if (time != null) {
+            spec = spec.and(CommunitySpecifications.hasTime(time));
+        }
+
+        if (sido != null) {
+            spec = spec.and(CommunitySpecifications.hasSido(sido));
+        }
+
+        if (sido != null &&sigungu != null) {
+            spec = spec.and(CommunitySpecifications.hasSido(sido));
+            spec = spec.and(CommunitySpecifications.hasSigungu(sigungu));
+        }
+
+        if (sido != null &&sigungu != null && dong != null) {
+            spec = spec.and(CommunitySpecifications.hasSido(sido));
+            spec = spec.and(CommunitySpecifications.hasSigungu(sigungu));
+            spec = spec.and(CommunitySpecifications.hasDong(dong));
+        }
+
+        return communityRepository.findAll(spec, pageable);
     }
 
     @Transactional
@@ -104,6 +134,9 @@ public class CommunityService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 게시글 수정이 가능합니다.");
         }
 
+        City city = cityRepository.findById(communityDto.getCity_code())
+                .orElseThrow(() -> new EntityNotFoundException("지역이 존재하지 않습니다."));
+
         Community community = Community.builder()
                 .title(communityDto.getTitle())
                 .content(communityDto.getContent())
@@ -113,6 +146,7 @@ public class CommunityService {
                 .userCount(communityDto.getUserCount())
                 .regDate(existPost.get().getRegDate())
                 .updateDate(LocalDateTime.now())
+                .city(city)
                 .build();
 
         return communityRepository.save(community);

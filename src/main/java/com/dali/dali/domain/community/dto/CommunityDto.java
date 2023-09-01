@@ -24,4 +24,5 @@ public class CommunityDto {
     private int currentCount;
     private LocalDateTime regDate;
     private LocalDateTime updateDate;
+    private Long city_code;
 }

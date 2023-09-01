@@ -1,5 +1,6 @@
 package com.dali.dali.domain.community.entity;
 
+import com.dali.dali.domain.city.entity.City;
 import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,5 +51,9 @@ public class Community {
 
     @ColumnDefault("0")
     private int currentCount;
+
+    @ManyToOne
+    @JoinColumn(name = "city_code")
+    private City city;
 
 }
