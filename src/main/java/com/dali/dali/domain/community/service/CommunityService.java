@@ -41,8 +41,9 @@ public class CommunityService {
             throw new UnauthorizedException("로그인이 필요합니다.");
         }
 
-        User user = userRepository.findById(communityDto.getUser_id())
-                .orElseThrow(() -> new EntityNotFoundException(communityDto.getUser_id() + ": 유저를 찾을 수 없습니다."));
+        String email = principal.getName();
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User loginUser = optionalUser.get();
 
         City city = cityRepository.findById(communityDto.getCity_code())
                 .orElseThrow(() -> new EntityNotFoundException("지역이 존재하지 않습니다."));
@@ -55,7 +56,7 @@ public class CommunityService {
                 .time(communityDto.getTime())
                 .userCount(communityDto.getUserCount())
                 .regDate(LocalDateTime.now())
-                .user(user)
+                .user(loginUser)
                 .city(city)
                 .build();
 
@@ -146,6 +147,7 @@ public class CommunityService {
                 .userCount(communityDto.getUserCount())
                 .regDate(existPost.get().getRegDate())
                 .updateDate(LocalDateTime.now())
+                .user(loginUser)
                 .city(city)
                 .build();
 
