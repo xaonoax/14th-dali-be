@@ -20,9 +20,8 @@ public class MyPageController {
         return userService.getMyPageInfo(principal);
     }
 
-    @PostMapping("/runner/{community_id}")
-    public void confirmRunner(@PathVariable Long community_id,
-                              @RequestBody RunnerDto runnerDto, Principal principal) throws Exception {
-        runnerService.confirmRunner(runnerDto, community_id, principal);
+    @PostMapping("/runner")
+    public void confirmRunner(@RequestBody RunnerDto runnerDto, Principal principal) throws Exception {
+        runnerService.confirmRunner(runnerDto, principal);
     }
 }

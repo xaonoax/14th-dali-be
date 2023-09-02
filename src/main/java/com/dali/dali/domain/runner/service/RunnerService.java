@@ -88,7 +88,7 @@ public class RunnerService {
         runRepository.deleteRunner(community);
     }
 
-    public void confirmRunner(RunnerDto runnerDto, Long community_id, Principal principal) throws Exception {
+    public void confirmRunner(RunnerDto runnerDto, Principal principal) throws Exception {
 
         String email = principal.getName();
         Optional<User> optionalUser = userRepository.findByEmail(email);
@@ -100,16 +100,24 @@ public class RunnerService {
         Community community = communityRepository.findById(runnerDto.getCommunity_id())
                 .orElseThrow(() -> new NotFoundException(runnerDto.getCommunity_id() + " : 글이 존재하지 않습니다."));
 
+        Optional<Runner> optionalRunner = runnerRepository.findByCommunityId(runnerDto.getCommunity_id());
+
+        if (!optionalRunner.isPresent()) {
+            throw new NotFoundException("해당 게시글은 러닝메이트 팀이 존재하지 않습니다.");
+        }
+
+        Runner run = optionalRunner.get();
+
         // 로그인한 사용자가 커뮤니티의 작성자가 아니라면 예외 발생
         if (!loginUser.getUserId().equals(community.getUser().getUserId())) {
             throw new IllegalStateException("작성자만 참여확인을 할 수 있습니다.");
         }
 
-        if (runnerRepository.existsByCommunityIdAndParticipation(community_id, 1)) {
-            throw new ParticipationAlreadyConfirmException(community_id + " : 참가확인이 완료된 러닝메이트입니다.");
+        if (runnerRepository.existsByCommunityIdAndParticipation(run.getCommunity().getId(), 1)) {
+            throw new ParticipationAlreadyConfirmException("참가확인이 완료된 러닝메이트입니다.");
         }
 
-        List<Runner> runners = runnerRepository.findByCommunityIdAndParticipation(community_id, 0);
+        List<Runner> runners = runnerRepository.findByCommunityIdAndParticipation(run.getCommunity().getId(), 0);
 
         for (Runner runner : runners) {
             runner.setParticipation(1);
