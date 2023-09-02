@@ -102,7 +102,8 @@ public class RunnerService {
 
         // 로그인한 사용자가 커뮤니티의 작성자가 아니라면 예외 발생
         if (!loginUser.getUserId().equals(community.getUser().getUserId())) {
-정        }
+            throw new IllegalStateException("작성자만 참여확인을 할 수 있습니다.");
+        }
 
         if (runnerRepository.existsByCommunityIdAndParticipation(community_id, 1)) {
             throw new ParticipationAlreadyConfirmException(community_id + " : 참가확인이 완료된 러닝메이트입니다.");
