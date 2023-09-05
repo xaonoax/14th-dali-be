@@ -24,7 +24,7 @@ spring:
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: http://ec2-3-34-183-203.ap-northeast-2.compute.amazonaws.com:8080/oauth2/callback/naver
+            redirect-uri: http://ec2-43-201-22-246.ap-northeast-2.compute.amazonaws.com:8080/oauth2/callback/naver
             authorization-grant-type: authorization_code
             scope: name, email, nickname, profile, gender
             client-name: Naver
@@ -44,4 +44,4 @@ jwt:
 
 app:
   oauth2:
-    authorizedRedirectUri: http://ec2-3-34-183-203.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
+    authorizedRedirectUri: http://ec2-43-201-22-246.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
