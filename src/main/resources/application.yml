@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://db-dali.c6tmpn3nkc9k.ap-northeast-2.rds.amazonaws.com:3306/dali?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://db-dali.c6tmpn3nkc9k.ap-northeast-2.rds.amazonaws.com:3306/dali
     username: ${MARIA_DB_ID}
     password: ${MARIA_DB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -8,7 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MariaDBDialect
+      dialect: org.hibernate.dialect.MariaDB106Dialect
     properties:
       hibernate:
         format_sql: true
