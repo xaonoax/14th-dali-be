@@ -23,11 +23,11 @@ public class UserService {
     private final RunnerRepository runnerRepository;
 
     public MyPageDTO getMyPageInfo(Principal principal) {
-        String loginUser = principal.getName();
-
         if (principal == null) {
             throw new UnauthorizedException("로그인이 필요합니다.");
         }
+
+        String loginUser = principal.getName();
 
         User user = userRepository.findByEmail(loginUser).orElseThrow(
                 () -> new NotFoundException("유저가 존재하지 않습니다."));
