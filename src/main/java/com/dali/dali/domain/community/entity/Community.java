@@ -1,6 +1,7 @@
 package com.dali.dali.domain.community.entity;
 
 import com.dali.dali.domain.city.entity.City;
+import com.dali.dali.domain.community.dto.CommunityDto;
 import com.dali.dali.domain.users.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -56,4 +57,17 @@ public class Community {
     @JoinColumn(name = "city_code")
     private City city;
 
+    // 게시글 수정 로직 추가
+    public Community updatePost(CommunityDto communityDto, User user, City city) {
+        this.title = communityDto.getTitle();
+        this.content = communityDto.getContent();
+        this.gender = communityDto.getGender();
+        this.ampm = communityDto.getAmpm();
+        this.time = communityDto.getTime();
+        this.userCount = communityDto.getUserCount();
+        this.updateDate = LocalDateTime.now();
+        this.user = user;
+        this.city = city;
+        return this;
+    }
 }
