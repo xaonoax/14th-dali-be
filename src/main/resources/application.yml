@@ -46,3 +46,7 @@ jwt:
 app:
   oauth2:
     authorizedRedirectUri: http://ec2-3-39-12-81.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
+
+slack:
+  webhook:
+    url: ${SLACK_WEBHOOK_URL}

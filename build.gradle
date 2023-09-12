@@ -47,6 +47,10 @@ dependencies {
 	implementation group: 'com.auth0', name: 'java-jwt', version: '3.10.2'
 	implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
 	implementation 'commons-io:commons-io:2.11.0'
+
+	// 슬랙 추가
+	implementation 'com.slack.api:slack-api-client:1.29.0'
+
 }
 
 jar {
