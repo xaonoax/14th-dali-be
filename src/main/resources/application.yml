@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://dali.ccfjtnrgb0pm.ap-northeast-2.rds.amazonaws.com:3306/dali?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mariadb://localhost:3306/dali?useUnicode=true&characterEncoding=utf-8
     username: ${MARIA_DB_ID}
     password: ${MARIA_DB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -25,7 +25,7 @@ spring:
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: http://ec2-3-39-12-81.ap-northeast-2.compute.amazonaws.com:8080/oauth2/callback/naver
+            redirect-uri: http://ec2-43-201-131-23.ap-northeast-2.compute.amazonaws.com:8080/oauth2/callback/naver
             authorization-grant-type: authorization_code
             scope: name, email, nickname, profile, gender
             client-name: Naver
@@ -45,7 +45,7 @@ jwt:
 
 app:
   oauth2:
-    authorizedRedirectUri: http://ec2-3-39-12-81.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
+    authorizedRedirectUri: http://ec2-43-201-131-23.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
 
 slack:
   webhook:
