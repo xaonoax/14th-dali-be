@@ -8,6 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+      dialect: org.hibernate.dialect.MariaDB106Dialect
     properties:
       hibernate:
         format_sql: true
@@ -24,7 +25,7 @@ spring:
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: http://localhost:8080/oauth2/callback/naver
+            redirect-uri: http://ec2-3-39-12-81.ap-northeast-2.compute.amazonaws.com:8080/oauth2/callback/naver
             authorization-grant-type: authorization_code
             scope: name, email, nickname, profile, gender
             client-name: Naver
@@ -44,4 +45,8 @@ jwt:
 
 app:
   oauth2:
-    authorizedRedirectUri: http://localhost:8080/oauth2/redirect
+    authorizedRedirectUri: http://ec2-3-39-12-81.ap-northeast-2.compute.amazonaws.com:8080/oauth2/redirect
+
+slack:
+  webhook:
+    url: ${SLACK_WEBHOOK_URL}

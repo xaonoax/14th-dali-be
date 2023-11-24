@@ -31,14 +31,24 @@ public class RunnerService {
     private final UserRepository userRepository;
     private final UserLevelRepository userLevelRepository;
 
+    private User getLoggedInUser(Principal principal) {
+        if (principal == null) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+        String email = principal.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("로그인 한 유저 정보를 찾을 수 없습니다."));
+    }
+
+    private Community getCommunityId(Long community_id) {
+        return communityRepository.findById(community_id)
+                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+    }
+
     public void addRunner(RunnerDto runnerDto, Principal principal) throws Exception {
 
-        Community community = communityRepository.findById(runnerDto.getCommunity_id())
-                .orElseThrow(() -> new NotFoundException(runnerDto.getCommunity_id() + " : 글이 존재하지 않습니다."));
-
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
+        User loginUser = getLoggedInUser(principal);
+        Community community = getCommunityId(runnerDto.getCommunity_id());
 
         if (community.getCurrentCount() >= community.getUserCount()) {
             throw new IllegalStateException("참여 마감되었습니다.");
@@ -46,8 +56,7 @@ public class RunnerService {
 
         // 이미 참여하기가 눌린 상태라면 에러 반환
         if (runnerRepository.findByUserAndCommunity(loginUser, community).isPresent()) {
-            throw new DuplicateResourceException("이미 참여하기 되어있는 상태입니다. : user: " + loginUser.getUserId()
-                    + ", community: " + community.getId());
+            throw new DuplicateResourceException("해당 글에는 이미 참여하기 되어있는 상태입니다.");
         }
 
         // 러닝메이트가 종료된 글에 참여하기를 누르면 에러 반환
@@ -70,12 +79,9 @@ public class RunnerService {
     }
 
     public void deleteRunner(RunnerDto runnerDto, Principal principal) throws Exception {
-        Community community = communityRepository.findById(runnerDto.getCommunity_id())
-                .orElseThrow(() -> new NotFoundException(runnerDto.getCommunity_id() + " : 글이 존재하지 않습니다."));
 
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
+        User loginUser = getLoggedInUser(principal);
+        Community community = getCommunityId(runnerDto.getCommunity_id());
 
         Runner runner = runnerRepository.findByUserAndCommunity(loginUser, community)
                 .orElseThrow(() -> new NotFoundException("참가하기 정보를 찾을 수 없습니다."));
@@ -90,15 +96,8 @@ public class RunnerService {
 
     public void confirmRunner(RunnerDto runnerDto, Principal principal) throws Exception {
 
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
-
-        User user = userRepository.findById(runnerDto.getUser_id())
-                .orElseThrow(() -> new NotFoundException(runnerDto.getUser_id() + " : 유저가 존재하지 않습니다."));
-
-        Community community = communityRepository.findById(runnerDto.getCommunity_id())
-                .orElseThrow(() -> new NotFoundException(runnerDto.getCommunity_id() + " : 글이 존재하지 않습니다."));
+        User loginUser = getLoggedInUser(principal);
+        Community community = getCommunityId(runnerDto.getCommunity_id());
 
         Optional<Runner> optionalRunner = runnerRepository.findByCommunityId(runnerDto.getCommunity_id());
 
@@ -122,10 +121,11 @@ public class RunnerService {
         for (Runner runner : runners) {
             runner.setParticipation(1);
             runner.setRunDate(LocalDate.now());
+
+            userLevelRepository.updateLevel(runner.getUser());
+            userLevelRepository.updateLevel(community.getUser());
         }
 
         runnerRepository.saveAll(runners);
-        // 레벨 업데이트 구현
-        userLevelRepository.updateLevel(user);
     }
 }

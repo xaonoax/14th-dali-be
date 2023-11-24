@@ -11,7 +11,7 @@ import com.dali.dali.domain.community.repository.CommunityRepository;
 import com.dali.dali.domain.community.repository.CommunitySpecifications;
 import com.dali.dali.domain.users.entity.User;
 import com.dali.dali.domain.users.repository.UserRepository;
-import com.dali.dali.global.exception.UnauthorizedException;
+import com.dali.dali.global.exception.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -34,16 +33,19 @@ public class CommunityService {
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
 
+    private User getLoggedInUser(Principal principal) {
+        if (principal == null) {
+            throw new IllegalArgumentException("로그인이 필요합니다.");
+        }
+        String email = principal.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("로그인 한 유저 정보를 찾을 수 없습니다."));
+    }
+
     @Transactional
     public Community createPost(CommunityDto communityDto, Principal principal) {
 
-        if (principal == null) {
-            throw new UnauthorizedException("로그인이 필요합니다.");
-        }
-
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
+        User loginUser = getLoggedInUser(principal);
 
         City city = cityRepository.findById(communityDto.getCity_code())
                 .orElseThrow(() -> new EntityNotFoundException("지역이 존재하지 않습니다."));
@@ -65,9 +67,7 @@ public class CommunityService {
 
     public Community getPost(Long id, Principal principal) {
 
-        if (principal == null) {
-            throw new UnauthorizedException("로그인이 필요합니다.");
-        }
+        User loginUser = getLoggedInUser(principal);
 
         return communityRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.")
@@ -79,9 +79,7 @@ public class CommunityService {
                                     String sido, String sigungu, String dong,
                                     Principal principal) {
 
-        if (principal == null) {
-            throw new UnauthorizedException("로그인이 필요합니다.");
-        }
+        User loginUser = getLoggedInUser(principal);
 
         Specification<Community> spec = Specification.where(null);
 
@@ -117,19 +115,13 @@ public class CommunityService {
 
     @Transactional
     public Community updatePost(Long id, CommunityDto communityDto, Principal principal) {
-        Optional<Community> existPost = communityRepository.findById(id);
-        if (existPost.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정할 게시글이 존재하지 않습니다.");
-        }
 
-        if (principal == null) {
-            throw new UnauthorizedException("로그인이 필요합니다.");
-        }
+        User loginUser = getLoggedInUser(principal);
 
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
-        User communityUser = existPost.get().getUser();
+        Community community = communityRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정할 게시글이 존재하지 않습니다."));
+
+        User communityUser = community.getUser();
 
         if (!loginUser.getEmail().equals(communityUser.getEmail())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "작성자만 게시글 수정이 가능합니다.");
@@ -138,19 +130,7 @@ public class CommunityService {
         City city = cityRepository.findById(communityDto.getCity_code())
                 .orElseThrow(() -> new EntityNotFoundException("지역이 존재하지 않습니다."));
 
-        Community community = Community.builder()
-                .title(communityDto.getTitle())
-                .content(communityDto.getContent())
-                .gender(communityDto.getGender())
-                .ampm(communityDto.getAmpm())
-                .time(communityDto.getTime())
-                .userCount(communityDto.getUserCount())
-                .regDate(existPost.get().getRegDate())
-                .updateDate(LocalDateTime.now())
-                .user(loginUser)
-                .city(city)
-                .build();
-
+        community.updatePost(communityDto, loginUser, city);
         return communityRepository.save(community);
     }
 
@@ -160,13 +140,7 @@ public class CommunityService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.")
         );
 
-        if (principal == null) {
-            throw new UnauthorizedException("로그인이 필요합니다.");
-        }
-
-        String email = principal.getName();
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        User loginUser = optionalUser.get();
+        User loginUser = getLoggedInUser(principal);
         User communityUser = community.getUser();
 
         if (!loginUser.getEmail().equals(communityUser.getEmail())) {
