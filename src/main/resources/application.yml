@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://db-dali.c6tmpn3nkc9k.ap-northeast-2.rds.amazonaws.com:3306/dali
+    url: jdbc:mariadb://dali.ccfjtnrgb0pm.ap-northeast-2.rds.amazonaws.com:3306/dali?useUnicode=true&characterEncoding=utf-8
     username: ${MARIA_DB_ID}
     password: ${MARIA_DB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
