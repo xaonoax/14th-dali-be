@@ -84,8 +84,9 @@
 
 ## 🔍 기획 및 설계
 
-### [회의록 및 총 정리본](https://rose-thistle-6ed.notion.site/14-5d78e06247e444cf97c4f43d8fc59a0b?pvs=4)
-### [기능명세서](https://rose-thistle-6ed.notion.site/c92225c7c3c8451d9a800cd7fec7b7cc?v=816de225a12d47cb9d9ab1ccfc242906&pvs=4)
+### [회의록 및 총 정리본](https://industrious-bongo-da8.notion.site/Ver-14-f2040e472da340438b8d057e2d6cd4cc?pvs=4)
+### [기능명세서](https://industrious-bongo-da8.notion.site/7a6b8fd2c43c4438865acc52a1829a4f?v=d956bd38ff934912b3109c99262e6557&pvs=4)
+
 ### [UI 설계](https://www.figma.com/file/ClyyVIQJj1Y8LINQhTU2uJ/%EB%8B%AC%EB%A6%AC-UI-%EC%84%A4%EA%B3%84?type=design&node-id=0%3A1&mode=design&t=yxoFAhppM5NLWbRG-1)
 ### [DB 설계](https://rose-thistle-6ed.notion.site/DB-6085dada5d884541aed76147d4d3cd44?pvs=4)
-### [API 명세서](https://rose-thistle-6ed.notion.site/API-9fce46d6c62c410f885e42692694a542?pvs=4)
+### [API 명세서](https://industrious-bongo-da8.notion.site/API-328347dc48a94d0e8b61d47e8b6e4d52?pvs=4)
