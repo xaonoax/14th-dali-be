@@ -88,5 +88,5 @@
 ### [기능명세서](https://industrious-bongo-da8.notion.site/7a6b8fd2c43c4438865acc52a1829a4f?v=d956bd38ff934912b3109c99262e6557&pvs=4)
 
 ### [UI 설계](https://www.figma.com/file/ClyyVIQJj1Y8LINQhTU2uJ/%EB%8B%AC%EB%A6%AC-UI-%EC%84%A4%EA%B3%84?type=design&node-id=0%3A1&mode=design&t=yxoFAhppM5NLWbRG-1)
-### [DB 설계](https://rose-thistle-6ed.notion.site/DB-6085dada5d884541aed76147d4d3cd44?pvs=4)
+### [DB 설계](https://industrious-bongo-da8.notion.site/DB-52b8e3d085354cbda28ff63dd0d218e8?pvs=4)
 ### [API 명세서](https://industrious-bongo-da8.notion.site/API-328347dc48a94d0e8b61d47e8b6e4d52?pvs=4)
